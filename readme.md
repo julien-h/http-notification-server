@@ -4,6 +4,7 @@
 .
 ├── client
 │   └── notifier.py
+│   └── new_notification.py
 └── server
     ├── main.py
     └── run.sh
@@ -27,4 +28,8 @@ cd client
 
 The current `notifier.py` implementation is for Windows's WSL. It should work on python windows' too, but code can be made simpler (see the blog post).
 
-Pull requests with notifiers implementations for linux and OSX are welcome.
+Pull requests with implementations for Linux and OSX are welcome.
+
+## Create a notification in python
+
+Python code to create a new notification available in `client/new_notification.py`.
