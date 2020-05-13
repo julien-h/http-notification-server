@@ -1,35 +1,76 @@
-# Notification server and client
+# Notification server
+
+A simple http-based notification server in Python.
+
+See: http://julienharbulot.com/notification-server.html
+
+## Install
+
+There are two components:
+1. The server 
+2. The desktop notification library
+
+To install the server requirements:
 
 ```
-.
-├── client
-│   └── notifier.py
-│   └── new_notification.py
-└── server
-    ├── main.py
-    └── run.sh
+pip install fastapi uvicorn
 ```
 
-This repository holds the code for my HTTP-based notification server and the python client used to display notification on the desktop.
+If you're on windows, you can also install the following notification library and you're good to go:
 
-The companion blog post is available here: https://julienharbulot.com/notification-server.html
-
-## How to use
-
-Make sure that docker is installed and running. Start the notification server. Then start the python client.
-
-```bash
-./server/run.sh
-cd client
-./notifier.py
+```
+pip install win10toast
 ```
 
-## Platform specific code
+For alternative notification clients, see below.
 
-The current `notifier.py` implementation is for Windows's WSL. It should work on python windows' too, but code can be made simpler (see the blog post).
+## Run
 
-Pull requests with implementations for Linux and OSX are welcome.
+Run this command in the repo's directory to start the server:
 
-## Create a notification in python
+```
+uvicorn notification_server:app
+```
 
-Python code to create a new notification available in `client/new_notification.py`.
+You can run the client script to make sure everything works. You'll need the python `requests` library for the python implementation:
+
+```
+pip install requests
+python client.py
+```
+
+Or you can use the bash client (which requires `curl`):
+
+```
+./client.sh
+```
+
+## Alternative notification clients
+
+To see available implementations for the notification client, head to the `/notification` directory.
+
+So far, I have implemented:
+- `win10toast.py` which is based on the [win10toast](https://pypi.org/project/win10toast/) library;
+- `burnttoast.py` which requires `powershell.exe` and the [BurntToast](https://github.com/Windos/BurntToast) module; 
+    Imho, this implementation is better than win10toast because the notifications remain in Windows' notification center until manually removed.
+- Pull requests with implementations for other platforms are welcome.
+
+To switch implementation, edit the `import` statement in `notification_server.py`.
+
+For win10toast:
+
+```
+from notification import win10toast as notifier
+```
+
+For the BurntToast implementation:
+
+```
+from notification import burnttoast as notifier
+```
+
+## Author & licence
+
+MIT License.
+
+Author: Julien Harbulot
